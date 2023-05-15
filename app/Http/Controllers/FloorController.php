@@ -47,7 +47,7 @@ class FloorController extends Controller
         return response()->json([
             'message' => 'Andar atualizado com sucesso',
             'data' => new FloorResource($floor)
-        ], 200);
+        ], 204);
     }
 
     /**
@@ -59,6 +59,6 @@ class FloorController extends Controller
         return response()->json([
             'message' => 'Andar deletado com sucesso',
             'data' => $deleted
-        ], 200);
+        ], 204);
     }
 }

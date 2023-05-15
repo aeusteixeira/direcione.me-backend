@@ -45,7 +45,7 @@ class BuildingController extends Controller
         return response()->json([
             'message' => 'Prédio atualizado com sucesso',
             'data' => new BuildingResource($building)
-        ], 200);
+        ], 204);
     }
 
     /**
@@ -57,6 +57,6 @@ class BuildingController extends Controller
         return response()->json([
             'message' => 'Prédio deletado com sucesso',
             'data' => $deleted
-        ], 200);
+        ], 204);
     }
 }
