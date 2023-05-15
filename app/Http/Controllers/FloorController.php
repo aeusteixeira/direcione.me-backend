@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Floor;
 use App\Http\Requests\StoreFloorRequest;
 use App\Http\Requests\UpdateFloorRequest;
+use App\Http\Resources\FloorResource;
+use FFI;
 
 class FloorController extends Controller
 {
@@ -13,23 +15,19 @@ class FloorController extends Controller
      */
     public function index()
     {
-        //
+        return new FloorResource(Floor::paginate(10));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreFloorRequest $request)
     {
-        //
+        return response()->json([
+            'message' => 'Andar criado com sucesso',
+            'data' => new FloorResource(Floor::create($request->validated()))
+        ], 201);
     }
 
     /**
@@ -37,15 +35,7 @@ class FloorController extends Controller
      */
     public function show(Floor $floor)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Floor $floor)
-    {
-        //
+        return new FloorResource($floor);
     }
 
     /**
@@ -53,7 +43,11 @@ class FloorController extends Controller
      */
     public function update(UpdateFloorRequest $request, Floor $floor)
     {
-        //
+        $floor->update($request->validated());
+        return response()->json([
+            'message' => 'Andar atualizado com sucesso',
+            'data' => new FloorResource($floor)
+        ], 200);
     }
 
     /**
@@ -61,6 +55,10 @@ class FloorController extends Controller
      */
     public function destroy(Floor $floor)
     {
-        //
+        $deleted = $floor->delete();
+        return response()->json([
+            'message' => 'Andar deletado com sucesso',
+            'data' => $deleted
+        ], 200);
     }
 }
