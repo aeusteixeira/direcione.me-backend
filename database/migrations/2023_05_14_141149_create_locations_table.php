@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('website')->nullable();
 
-            $table->foreignId('floor_id')->constrained();
+            $table->foreignId('floor_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

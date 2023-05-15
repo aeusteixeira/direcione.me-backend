@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Location;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
+use App\Http\Resources\LocationResource;
 
 class LocationController extends Controller
 {
@@ -13,15 +14,7 @@ class LocationController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return LocationResource::collection(Location::all());
     }
 
     /**
@@ -37,15 +30,7 @@ class LocationController extends Controller
      */
     public function show(Location $location)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Location $location)
-    {
-        //
+        return new LocationResource($location);
     }
 
     /**

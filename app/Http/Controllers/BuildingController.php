@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Building;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
+use App\Http\Resources\BuildingResource;
 
 class BuildingController extends Controller
 {
@@ -13,15 +14,7 @@ class BuildingController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return BuildingResource::collection(Building::paginate(10));
     }
 
     /**
@@ -29,7 +22,7 @@ class BuildingController extends Controller
      */
     public function store(StoreBuildingRequest $request)
     {
-        //
+        return new BuildingResource(Building::create($request->validated()));
     }
 
     /**
@@ -37,15 +30,7 @@ class BuildingController extends Controller
      */
     public function show(Building $building)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Building $building)
-    {
-        //
+        return new BuildingResource($building);
     }
 
     /**
@@ -53,7 +38,11 @@ class BuildingController extends Controller
      */
     public function update(UpdateBuildingRequest $request, Building $building)
     {
-        //
+        $building->update($request->validated());
+        return response()->json([
+            'message' => 'Building updated successfully',
+            'data' => new BuildingResource($building)
+        ], 200);
     }
 
     /**
@@ -61,6 +50,10 @@ class BuildingController extends Controller
      */
     public function destroy(Building $building)
     {
-        //
+        $deleted = $building->delete();
+        return response()->json([
+            'message' => 'Building deleted successfully',
+            'data' => $deleted
+        ], 200);
     }
 }

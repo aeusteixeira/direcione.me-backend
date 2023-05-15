@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('price')->nullable();
             $table->string('description')->nullable();
             $table->string('image')->nullable();
-            $table->foreignId('location_id')->constrained();
-            $table->foreignId('service_id')->constrained();
+            $table->foreignId('location_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('service_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

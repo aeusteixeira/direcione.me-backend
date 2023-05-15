@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResources([
+    'buildings' => \App\Http\Controllers\BuildingController::class,
+    'locations' => \App\Http\Controllers\LocationController::class,
+    'floors' => \App\Http\Controllers\FloorController::class,
+    'services' => \App\Http\Controllers\ServiceController::class,
+]);
