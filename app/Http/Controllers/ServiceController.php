@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
+use App\Http\Resources\ServiceResource;
 
 class ServiceController extends Controller
 {
@@ -13,15 +14,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return ServiceResource::collection(Service::paginate(10));
     }
 
     /**
@@ -29,7 +22,10 @@ class ServiceController extends Controller
      */
     public function store(StoreServiceRequest $request)
     {
-        //
+        return response()->json([
+            'message' => 'Serviço criado com sucesso',
+            'data' => new ServiceResource(Service::create($request->validated()))
+        ], 201);
     }
 
     /**
@@ -37,15 +33,7 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Service $service)
-    {
-        //
+        return new ServiceResource($service);
     }
 
     /**
@@ -53,7 +41,11 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        //
+        $service->update($request->validated());
+        return response()->json([
+            'message' => 'Serviço atualizado com sucesso',
+            'data' => new ServiceResource($service)
+        ], 204);
     }
 
     /**
@@ -61,6 +53,9 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        $deleted = $service->delete();
+        return response()->json([
+            'message' => 'Serviço deletado com sucesso',
+        ], 204);
     }
 }
