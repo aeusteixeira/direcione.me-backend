@@ -11,7 +11,7 @@ class StoreLocationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreLocationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'floor_id' => ['required', 'integer', 'exists:floors,id'],
+            'description' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
+            'image' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'max:255'],
+            'website' => ['required', 'string', 'max:255'],
         ];
     }
 }
