@@ -22,7 +22,10 @@ class BuildingController extends Controller
      */
     public function store(StoreBuildingRequest $request)
     {
-        return new BuildingResource(Building::create($request->validated()));
+        return response()->json([
+            'message' => 'Prédio criado com sucesso',
+            'data' => new BuildingResource(Building::create($request->validated()))
+        ], 201);
     }
 
     /**
@@ -40,7 +43,7 @@ class BuildingController extends Controller
     {
         $building->update($request->validated());
         return response()->json([
-            'message' => 'Building updated successfully',
+            'message' => 'Prédio atualizado com sucesso',
             'data' => new BuildingResource($building)
         ], 200);
     }
@@ -52,7 +55,7 @@ class BuildingController extends Controller
     {
         $deleted = $building->delete();
         return response()->json([
-            'message' => 'Building deleted successfully',
+            'message' => 'Prédio deletado com sucesso',
             'data' => $deleted
         ], 200);
     }
