@@ -14,7 +14,7 @@ class LocationController extends Controller
      */
     public function index()
     {
-        return LocationResource::collection(Location::all());
+        return LocationResource::collection(Location::paginate(10));
     }
 
     /**
@@ -22,7 +22,10 @@ class LocationController extends Controller
      */
     public function store(StoreLocationRequest $request)
     {
-        //
+        return response()->json([
+            'message' => 'Local criado com sucesso',
+            'data' => new LocationResource(Location::create($request->validated()))
+        ], 201);
     }
 
     /**
@@ -38,7 +41,11 @@ class LocationController extends Controller
      */
     public function update(UpdateLocationRequest $request, Location $location)
     {
-        //
+        $location->update($request->validated());
+        return response()->json([
+            'message' => 'Local atualizado com sucesso',
+            'data' => new LocationResource($location)
+        ], 204);
     }
 
     /**
@@ -46,6 +53,9 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
-        //
+        $deleted = $location->delete();
+        return response()->json([
+            'message' => 'Local deletado com sucesso',
+        ], 204);
     }
 }
